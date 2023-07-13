@@ -1,0 +1,13 @@
+﻿@model Movie
+
+@{
+    ViewData["Title"] = "Movie Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h3>@(Model?.Title)</h3>
+    <p>@(Model?.Overview)</p>
+    <!-- Display other movie details as needed -->
+</div>
