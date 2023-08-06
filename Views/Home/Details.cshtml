@@ -1,13 +1,9 @@
-﻿@model Movie
+﻿@model Cloud_COmputing.Models.Movie
 
-@{
-    ViewData["Title"] = "Movie Details";
+<h1>@Model.Title</h1>
+<p>@Model.Overview</p>
+
+@if (!string.IsNullOrEmpty(Model.PosterPath))
+{
+    <img src="https://image.tmdb.org/t/p/w500@Model.PosterPath" alt="@Model.Title Poster">
 }
-
-<h1>@ViewData["Title"]</h1>
-
-<div>
-    <h3>@(Model?.Title)</h3>
-    <p>@(Model?.Overview)</p>
-    <!-- Display other movie details as needed -->
-</div>

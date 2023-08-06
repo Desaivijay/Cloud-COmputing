@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using Cloud_COmputing.Models;
 
 namespace Cloud_COmputing.Services
@@ -11,21 +10,23 @@ namespace Cloud_COmputing.Services
     {
         private readonly HttpClient _httpClient;
 
-        public TmdbService(HttpClient httpClient)
+        public TmdbService()
         {
-            _httpClient = httpClient;
+            _httpClient = new HttpClient();
         }
 
         public async Task<List<Movie>> GetPopularMovies()
         {
-            var response = await _httpClient.GetStringAsync("https://api.themoviedb.org/3/movie/popular?api_key=5f1cf8ab9bc249f701a7c4a96f1292f5");
+            var apiKey = "991eb3b11e660ab06861c195c6b4b9a0"; // Replace with your actual API key
+            var response = await _httpClient.GetStringAsync($"https://api.themoviedb.org/3/movie/popular?api_key={apiKey}");
             var result = JsonConvert.DeserializeObject<TmdbResponse>(response);
             return result.Results;
         }
 
         public async Task<Movie> GetMovieDetails(int movieId)
         {
-            var response = await _httpClient.GetStringAsync($"https://api.themoviedb.org/3/movie/{movieId}?api_key=5f1cf8ab9bc249f701a7c4a96f1292f5");
+            var apiKey = "991eb3b11e660ab06861c195c6b4b9a0"; // Replace with your actual API key
+            var response = await _httpClient.GetStringAsync($"https://api.themoviedb.org/3/movie/{movieId}?api_key={apiKey}&append_to_response=images");
             var result = JsonConvert.DeserializeObject<Movie>(response);
             return result;
         }
@@ -35,13 +36,4 @@ namespace Cloud_COmputing.Services
     {
         public List<Movie> Results { get; set; }
     }
-
-  //  public class Movie
-   // {
-   //     public int Id { get; set; }
-    //    public string Title { get; set; }
-    //    public string Overview { get; set; }
-        // Add other properties as needed
-   // }
 }
-

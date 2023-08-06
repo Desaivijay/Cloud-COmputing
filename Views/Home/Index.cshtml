@@ -1,29 +1,12 @@
-﻿@model List<Movie>
+﻿@model List<Cloud_COmputing.Models.Movie>
 
-@{
-    ViewData["Title"] = "Popular Movies";
-}
+<h1>Popular Movies</h1>
 
-<h1>@ViewData["Title"]</h1>
-
-@if (Model != null)
+@foreach (var movie in Model)
 {
-    @foreach (var movie in Model)
-    {
-        <div>
-            @if (!string.IsNullOrEmpty(movie?.Title))
-            {
-                <h3>@movie.Title</h3>
-            }
-            @if (!string.IsNullOrEmpty(movie?.Overview))
-            {
-                <p>@movie.Overview</p>
-            }
-            <p><a href="@Url.Action("Details", "Movies", new { id = movie?.Id })">Details</a></p>
-        </div>
-    }
-}
-else
-{
-    <p>No movies found.</p>
+    <div>
+        <h3>@movie.Title</h3>
+        <p>@movie.Overview</p>
+        <p><a href="@Url.Action("Details", new { id = movie.Id })">Details</a></p>
+    </div>
 }

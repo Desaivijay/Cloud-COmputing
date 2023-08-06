@@ -1,32 +1,30 @@
-﻿using Cloud_COmputing.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using Cloud_COmputing.Models;
+using Cloud_COmputing.Services; // Corrected namespace
 
 namespace Cloud_COmputing.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly TmdbService _tmdbService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController()
         {
-            _logger = logger;
+            // Instantiate the TmdbService manually (if required constructor arguments, provide them here)
+            _tmdbService = new TmdbService();
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var movies = await _tmdbService.GetPopularMovies();
+            return View(movies);
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var movie = await _tmdbService.GetMovieDetails(id);
+            return View(movie);
         }
     }
 }
